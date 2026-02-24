@@ -12,31 +12,56 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: List files
-      run: ls -la
-    
-    - name: Create project directory
-      run: mkdir -p GreenShield
-    
-    - name: Copy files
+    - name: Install dependencies
       run: |
-        cp *.swift GreenShield/ 2>/dev/null || true
-        cp *.plist GreenShield/ 2>/dev/null || true
-        cp *.storyboard GreenShield/ 2>/dev/null || true
-    
-    - name: Create simple IPA structure
+        brew install xcodegen
+        
+    - name: Create project.yml
       run: |
-        cd GreenShield
-        mkdir -p Payload
-        mkdir -p Payload/GreenShield.app
-        cp *.swift Payload/GreenShield.app/ 2>/dev/null || true
-        cp *.plist Payload/GreenShield.app/ 2>/dev/null || true
-        cp *.storyboard Payload/GreenShield.app/ 2>/dev/null || true
-        zip -r GreenShield.ipa Payload/
+        cat > project.yml << 'EOF'
+        name: GreenShield
+        options:
+          bundleIdPrefix: com.greenshield
+        targets:
+          GreenShield:
+            type: application
+            platform: iOS
+            deploymentTarget: "14.0"
+            sources:
+              - path: .
+                include: ["*.swift", "*.storyboard"]
+            settings:
+              base:
+                PRODUCT_BUNDLE_IDENTIFIER: com.greenshield.modifier
+                PRODUCT_NAME: GreenShield
+                PRODUCT_DISPLAY_NAME: 绿盾版本修改器
+            entitlements:
+              com.apple.security.app-sandbox: false
+        EOF
+        
+    - name: Generate Xcode project
+      run: xcodegen generate
+    
+    - name: Build app
+      run: |
+        xcodebuild -project GreenShield.xcodeproj -scheme GreenShield -configuration Release -sdk iphoneos -archivePath GreenShield.xcarchive archive
+    
+    - name: Export IPA
+      run: |
+        xcodebuild -exportArchive -archivePath GreenShield.xcarchive -exportOptionsPlist <(echo '<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+        <plist version="1.0">
+        <dict>
+            <key>method</key>
+            <string>development</string>
+            <key>signingStyle</key>
+            <string>automatic</string>
+        </dict>
+        </plist>') -exportPath .
     
     - name: Upload IPA
       uses: actions/upload-artifact@v4
       with:
         name: GreenShield
-        path: GreenShield/GreenShield.ipa
+        path: GreenShield.ipa
         retention-days: 30
