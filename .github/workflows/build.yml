@@ -1,0 +1,69 @@
+name: Build iOS App
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Create project structure
+      run: |
+        mkdir -p GreenShield
+        mv *.swift GreenShield/
+        mv *.plist GreenShield/
+        mv *.storyboard GreenShield/
+        cd GreenShield
+        xcodebuild -createProject -project GreenShield.xcodeproj -target GreenShield
+        
+    - name: Add files to project
+      run: |
+        cd GreenShield
+        for file in *.swift *.plist *.storyboard; do
+          xcodebuild -project GreenShield.xcodeproj -target GreenShield -add-file "$file"
+        done
+        
+    - name: Update Info.plist
+      run: |
+        cd GreenShield
+        plutil -replace CFBundleIdentifier -string "com.greenshield.modifier" Info.plist
+        plutil -replace CFBundleName -string "GreenShield" Info.plist
+        plutil -replace CFBundleDisplayName -string "绿盾版本修改器" Info.plist
+        
+    - name: Build app
+      run: |
+        cd GreenShield
+        xcodebuild -project GreenShield.xcodeproj -scheme GreenShield -configuration Release -sdk iphoneos -archivePath GreenShield.xcarchive archive || true
+        
+    - name: Create ExportOptions.plist
+      run: |
+        cd GreenShield
+        cat > ExportOptions.plist << 'EOF'
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+        <plist version="1.0">
+        <dict>
+            <key>method</key>
+            <string>development</string>
+            <key>signingStyle</key>
+            <string>automatic</string>
+        </dict>
+        </plist>
+        EOF
+        
+    - name: Export IPA
+      run: |
+        cd GreenShield
+        xcodebuild -exportArchive -archivePath GreenShield.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath . || true
+        
+    - name: Upload IPA
+      uses: actions/upload-artifact@v3
+      with:
+        name: GreenShield
+        path: GreenShield/GreenShield.ipa
+        retention-days: 30
