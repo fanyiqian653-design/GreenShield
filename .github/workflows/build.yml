@@ -12,13 +12,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: Create complete iOS app structure
+    - name: Create IPA
       run: |
-        # Create app directory structure
+        # Create directories
         mkdir -p GreenShield/Payload/GreenShield.app
         
-        # Create Info.plist with correct configuration
-        cat > GreenShield/Payload/GreenShield.app/Info.plist << 'EOF'
+        # Create Info.plist
+        cat > GreenShield/Payload/GreenShield.app/Info.plist << 'EOL'
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -37,44 +37,14 @@ jobs:
     <true/>
     <key>CFBundleExecutable</key>
     <string>GreenShield</string>
-    <key>CFBundleInfoDictionaryVersion</key>
-    <string>6.0</string>
-    <key>CFBundlePackageType</key>
-    <string>APPL</string>
-    <key>CFBundleSignature</key>
-    <string>????</string>
-    <key>UIApplicationSceneManifest</key>
-    <dict>
-        <key>UIApplicationSupportsMultipleScenes</key>
-        <false/>
-        <key>UISceneConfigurations</key>
-        <dict>
-            <key>UIWindowSceneSessionRoleApplication</key>
-            <array>
-                <dict>
-                    <key>UISceneConfigurationName</key>
-                    <string>Default Configuration</string>
-                    <key>UISceneDelegateClassName</key>
-                    <string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
-                </dict>
-            </array>
-        </dict>
-    </dict>
 </dict>
 </plist>
-EOF
+EOL
         
-        # Create a minimal but valid executable
+        # Create executable
         echo '#!/bin/sh' > GreenShield/Payload/GreenShield.app/GreenShield
-        echo 'echo "GreenShield Modifier" > /dev/null' >> GreenShield/Payload/GreenShield.app/GreenShield
+        echo 'echo "GreenShield" > /dev/null' >> GreenShield/Payload/GreenShield.app/GreenShield
         chmod +x GreenShield/Payload/GreenShield.app/GreenShield
-        
-        # Create a simple icon
-        touch GreenShield/Payload/GreenShield.app/AppIcon60x60@2x.png
-        
-        # Copy all Swift and storyboard files
-        cp *.swift GreenShield/Payload/GreenShield.app/ 2>/dev/null || true
-        cp *.storyboard GreenShield/Payload/GreenShield.app/ 2>/dev/null || true
         
         # Create IPA
         cd GreenShield
