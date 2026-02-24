@@ -62,7 +62,7 @@ jobs:
         xcodebuild -exportArchive -archivePath GreenShield.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath . || true
         
     - name: Upload IPA
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: GreenShield
         path: GreenShield/GreenShield.ipa
