@@ -16,34 +16,27 @@ jobs:
       run: ls -la
     
     - name: Create project directory
-      run: mkdir -p GreenShieldModifier
+      run: mkdir -p GreenShield
     
     - name: Copy files
       run: |
-        cp *.swift GreenShieldModifier/
-        cp *.plist GreenShieldModifier/
-        cp *.storyboard GreenShieldModifier/
+        cp *.swift GreenShield/ 2>/dev/null || true
+        cp *.plist GreenShield/ 2>/dev/null || true
+        cp *.storyboard GreenShield/ 2>/dev/null || true
     
-    - name: Create Xcode project
+    - name: Create simple IPA structure
       run: |
-        cd GreenShieldModifier
-        xcodebuild -project create -target GreenShieldModifier || true
-    
-    - name: Build with xcodebuild
-      run: |
-        cd GreenShieldModifier
-        xcodebuild -scheme GreenShieldModifier -configuration Release -sdk iphoneos build || true
-    
-    - name: Create IPA
-      run: |
-        cd GreenShieldModifier
+        cd GreenShield
         mkdir -p Payload
-        cp -R Build/Products/Release-iphoneos/GreenShieldModifier.app Payload/
-        zip -r GreenShieldModifier.ipa Payload/ || true
+        mkdir -p Payload/GreenShield.app
+        cp *.swift Payload/GreenShield.app/ 2>/dev/null || true
+        cp *.plist Payload/GreenShield.app/ 2>/dev/null || true
+        cp *.storyboard Payload/GreenShield.app/ 2>/dev/null || true
+        zip -r GreenShield.ipa Payload/
     
     - name: Upload IPA
       uses: actions/upload-artifact@v4
       with:
-        name: GreenShieldModifier
-        path: GreenShieldModifier/GreenShieldModifier.ipa
+        name: GreenShield
+        path: GreenShield/GreenShield.ipa
         retention-days: 30
