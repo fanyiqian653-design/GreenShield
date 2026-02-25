@@ -17,38 +17,9 @@ jobs:
         mkdir -p Payload/GreenShield.app
         echo '#!/bin/sh' > Payload/GreenShield.app/GreenShield
         chmod +x Payload/GreenShield.app/GreenShield
-        cat > Payload/GreenShield.app/Info.plist << EOL
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>CFBundleIdentifier</key>
-    <string>com.greenshield.modifier</string>
-    <key>CFBundleName</key>
-    <string>GreenShield</string>
-    <key>CFBundleDisplayName</key>
-    <string>绿盾版本修改器</string>
-    <key>CFBundleVersion</key>
-    <string>1.0</string>
-    <key>CFBundleShortVersionString</key>
-    <string>1.0</string>
-    <key>LSRequiresIPhoneOS</key>
-    <true/>
-    <key>CFBundleExecutable</key>
-    <string>GreenShield</string>
-    <key>UIApplicationSceneManifest</key>
-    <dict>
-        <key>UIApplicationSupportsMultipleScenes</key>
-        <false/>
-    </dict>
-</dict>
-</plist>
-EOL
-        zip -r GreenShield.ipa Payload/
-    
-    - name: Upload IPA
-      uses: actions/upload-artifact@v4
-      with:
-        name: GreenShield
-        path: GreenShield.ipa
-        retention-days: 30
+        echo '<?xml version="1.0" encoding="UTF-8"?>' > Payload/GreenShield.app/Info.plist
+        echo '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' >> Payload/GreenShield.app/Info.plist
+        echo '<plist version="1.0"><dict>' >> Payload/GreenShield.app/Info.plist
+        echo '    <key>CFBundleIdentifier</key><string>com.greenshield.modifier</string>' >> Payload/GreenShield.app/Info.plist
+        echo '    <key>CFBundleName</key><string>GreenShield</string>' >> Payload/GreenShield.app/Info.plist
+        echo '    <key>CFBundleDisplayName</key><string>绿盾版本修改器</string>' >> Payload/GreenShield.app/Info.pl
