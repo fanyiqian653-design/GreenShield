@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="GreenShieldModifier" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="m3y-7X-3fD">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yVj-0p-1qH">
+                                <rect key="frame" x="20" y="100" width="353" height="652"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="绿盾版本修改器" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8Q-3s-2b5">
+                                        <rect key="frame" x="20" y="40" width="313" height="40"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="28" weight="bold"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前系统版本: 15.3" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d9e-4r-6f7">
+                                        <rect key="frame" x="20" y="100" width="313" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请点击下方按钮执行操作" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e2w-5t-8g9">
+                                        <rect key="frame" x="20" y="200" width="313" height="40"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f3r-6u-9h0">
+                                        <rect key="frame" x="40" y="350" width="273" height="60"/>
+                                        <state key="normal" title="修改绿盾">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <buttonConfiguration key="configuration" style="filled" title="修改绿盾">
+                                            <title key="title" string="修改绿盾"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="modifyButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="g4s-7v-0i1"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h5t-8w-1j2">
+                                        <rect key="frame" x="40" y="430" width="273" height="60"/>
+                                        <state key="normal" title="恢复">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <buttonConfiguration key="configuration" style="filled" title="恢复">
+                                            <title key="title" string="恢复"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="restoreButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="i6u-9x-2k3"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.9" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="c8Q-3s-2b5" firstAttribute="top" secondItem="yVj-0p-1qH" secondAttribute="top" constant="40" id="j7v-0y-3l4"/>
+                                    <constraint firstItem="c8Q-3s-2b5" firstAttribute="leading" secondItem="yVj-0p-1qH" secondAttribute="leading" constant="20" id="k8w-1z-4m5"/>
+                                    <constraint firstItem="yVj-0p-1qH" firstAttribute="trailing" secondItem="c8Q-3s-2b5" secondAttribute="trailing" constant="20" id="l9x-2a-5n6"/>
+                                    <constraint firstItem="d9e-4r-6f7" firstAttribute="top" secondItem="c8Q-3s-2b5" secondAttribute="bottom" constant="20" id="m0y-3b-6o7"/>
+                                    <constraint firstItem="d9e-4r-6f7" firstAttribute="leading" secondItem="yVj-0p-1qH" secondAttribute="leading" constant="20" id="n1z-4c-7p8"/>
+                                    <constraint firstItem="yVj-0p-1qH" firstAttribute="trailing" secondItem="d9e-4r-6f7" secondAttribute="trailing" constant="20" id="o2a-5d-8q9"/>
+                                    <constraint firstItem="e2w-5t-8g9" firstAttribute="top" secondItem="d9e-4r-6f7" secondAttribute="bottom" constant="60" id="p3b-6e-9r0"/>
+                                    <constraint firstItem="e2w-5t-8g9" firstAttribute="leading" secondItem="yVj-0p-1qH" secondAttribute="leading" constant="20" id="q4c-7f-0s1"/>
+                                    <constraint firstItem="yVj-0p-1qH" firstAttribute="trailing" secondItem="e2w-5t-8g9" secondAttribute="trailing" constant="20" id="r5d-8g-1s2"/>
+                                    <constraint firstItem="f3r-6u-9h0" firstAttribute="top" secondItem="e2w-5t-8g9" secondAttribute="bottom" constant="110" id="s6e-9h-2s3"/>
+                                    <constraint firstItem="f3r-6u-9h0" firstAttribute="leading" secondItem="yVj-0p-1qH" secondAttribute="leading" constant="40" id="t7f-0i-3s4"/>
+                                    <constraint firstItem="yVj-0p-1qH" firstAttribute="trailing" secondItem="f3r-6u-9h0" secondAttribute="trailing" constant="40" id="u8g-1j-4s5"/>
+                                    <constraint firstItem="h5t-8w-1j2" firstAttribute="top" secondItem="f3r-6u-9h0" secondAttribute="bottom" constant="20" id="v9h-2k-5s6"/>
+                                    <constraint firstItem="h5t-8w-1j2" firstAttribute="leading" secondItem="yVj-0p-1qH" secondAttribute="leading" constant="40" id="w0i-3l-6s7"/>
+                                    <constraint firstItem="yVj-0p-1qH" firstAttribute="trailing" secondItem="h5t-8w-1j2" secondAttribute="trailing" constant="40" id="x1j-4m-7s8"/>
+                                    <constraint firstAttribute="height" secondItem="f3r-6u-9h0" secondAttribute="height" constant="0" id="y2k-5n-8s9"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="m3y-7X-3fD" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="z3l-6o-9s0"/>
+                            <constraint firstItem="m3y-7X-3fD" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="a4m-7p-0s1"/>
+                            <constraint firstItem="8bC-Xf-vdC" firstAttribute="trailing" secondItem="m3y-7X-3fD" secondAttribute="trailing" id="b5n-8q-1s2"/>
+                            <constraint firstItem="8bC-Xf-vdC" firstAttribute="bottom" secondItem="m3y-7X-3fD" secondAttribute="bottom" id="c6o-9r-2s3"/>
+                            <constraint firstItem="yVj-0p-1qH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="d7p-0s-3s4"/>
+                            <constraint firstItem="yVj-0p-1qH" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="e8q-1t-4s5"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="yVj-0p-1qH" secondAttribute="trailing" constant="20" id="f9r-2u-5s6"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="yVj-0p-1qH" secondAttribute="bottom" constant="100" id="g0s-3v-6s7"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="backgroundImageView" destination="m3y-7X-3fD" id="h1t-4w-7s8"/>
+                        <outlet property="cardView" destination="yVj-0p-1qH" id="i2u-5x-8s9"/>
+                        <outlet property="modifyButton" destination="f3r-6u-9h0" id="j3v-6y-9s0"/>
+                        <outlet property="restoreButton" destination="h5t-8w-1j2" id="k4w-7z-0s1"/>
+                        <outlet property="statusLabel" destination="e2w-5t-8g9" id="l5x-8a-1s2"/>
+                        <outlet property="titleLabel" destination="c8Q-3s-2b5" id="m6y-9b-2s3"/>
+                        <outlet property="versionLabel" destination="d9e-4r-6f7" id="n7z-0c-3s4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="134.86111111111111" y="104.10798122065728"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="background" width="1125" height="2436"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

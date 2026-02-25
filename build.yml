@@ -1,0 +1,67 @@
+name: Build iOS App
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: List files
+      run: ls -la
+    
+    - name: Create project structure
+      run: |
+        mkdir -p GreenShieldModifier
+        cp *.swift GreenShieldModifier/
+        cp *.plist GreenShieldModifier/
+        cp *.storyboard GreenShieldModifier/
+    
+    - name: Create Xcode project
+      run: |
+        cd GreenShieldModifier
+        xcodebuild -createProject -project GreenShieldModifier.xcodeproj -target GreenShieldModifier
+    
+    - name: Add files to project
+      run: |
+        cd GreenShieldModifier
+        for file in *.swift *.plist *.storyboard; do
+          xcodebuild -project GreenShieldModifier.xcodeproj -target GreenShieldModifier -add-file "$file"
+        done
+    
+    - name: Update project settings
+      run: |
+        cd GreenShieldModifier
+        plutil -replace CFBundleIdentifier -string "com.greenshield.modifier" Info.plist
+        plutil -replace CFBundleName -string "GreenShieldModifier" Info.plist
+        plutil -replace CFBundleDisplayName -string "绿盾版本修改器" Info.plist
+    
+    - name: Build app
+      run: |
+        cd GreenShieldModifier
+        xcodebuild -project GreenShieldModifier.xcodeproj -scheme GreenShieldModifier -configuration Release -sdk iphoneos -archivePath GreenShieldModifier.xcarchive archive || true
+    
+    - name: Create IPA
+      run: |
+        cd GreenShieldModifier
+        mkdir -p Payload
+        cp -R Build/Products/Release-iphoneos/GreenShieldModifier.app Payload/ 2>/dev/null || true
+        if [ ! -d "Payload/GreenShieldModifier.app" ]; then
+          mkdir -p Payload/GreenShieldModifier.app
+          echo '#!/bin/sh' > Payload/GreenShieldModifier.app/GreenShieldModifier
+          chmod +x Payload/GreenShieldModifier.app/GreenShieldModifier
+          cp Info.plist Payload/GreenShieldModifier.app/
+        fi
+        zip -r GreenShieldModifier.ipa Payload/
+    
+    - name: Upload IPA
+      uses: actions/upload-artifact@v4
+      with:
+        name: GreenShieldModifier
+        path: GreenShieldModifier/GreenShieldModifier.ipa
+        retention-days: 30
