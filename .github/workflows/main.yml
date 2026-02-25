@@ -12,14 +12,49 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: Create minimal IPA
+    - name: Create IPA directory
+      run: mkdir -p app/Payload/GreenShield.app
+    
+    - name: Create executable
       run: |
-        mkdir -p Payload/GreenShield.app
-        echo '#!/bin/sh' > Payload/GreenShield.app/GreenShield
-        chmod +x Payload/GreenShield.app/GreenShield
-        echo '<?xml version="1.0" encoding="UTF-8"?>' > Payload/GreenShield.app/Info.plist
-        echo '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' >> Payload/GreenShield.app/Info.plist
-        echo '<plist version="1.0"><dict>' >> Payload/GreenShield.app/Info.plist
-        echo '    <key>CFBundleIdentifier</key><string>com.greenshield.modifier</string>' >> Payload/GreenShield.app/Info.plist
-        echo '    <key>CFBundleName</key><string>GreenShield</string>' >> Payload/GreenShield.app/Info.plist
-        echo '    <key>CFBundleDisplayName</key><string>绿盾版本修改器</string>' >> Payload/GreenShield.app/Info.pl
+        echo '#!/bin/sh' > app/Payload/GreenShield.app/GreenShield
+        chmod +x app/Payload/GreenShield.app/GreenShield
+    
+    - name: Create Info.plist
+      run: |
+        cat > app/Payload/GreenShield.app/Info.plist << 'EOL'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleIdentifier</key>
+    <string>com.greenshield.modifier</string>
+    <key>CFBundleName</key>
+    <string>GreenShield</string>
+    <key>CFBundleDisplayName</key>
+    <string>绿盾版本修改器</string>
+    <key>CFBundleVersion</key>
+    <string>1.0</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+    <key>CFBundleExecutable</key>
+    <string>GreenShield</string>
+</dict>
+</plist>
+EOL
+    
+    - name: Create IPA
+      run: |
+        cd app && zip -r GreenShield.ipa Payload/
+    
+    - name: List files
+      run: ls -la app/
+    
+    - name: Upload IPA
+      uses: actions/upload-artifact@v4
+      with:
+        name: GreenShield
+        path: app/GreenShield.ipa
+        retention-days: 30
